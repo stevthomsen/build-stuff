@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 set -o pipefail
-make $* clobber SRV=1 | tee build.ipe.clobber.log
+make $* clobber SRV=1 | tee build.ipcont.clobber.log
 status=$?
 if [ ${status} -ne 0 ]; then
   echo "clobber for Ipe failed ${status}"

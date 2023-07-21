@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
 set -o pipefail
-make $* SRV=1 2>&1 | tee build.ipe.log
+make $* SRV=1 2>&1 | tee build.ipcont.log
 status=$?
 if [ ${status} -ne 0 ]; then
   echo "build for Ipe failed ${status}"
