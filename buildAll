@@ -1,0 +1,28 @@
+#! /usr/bin/bash
+
+rm -f *.log
+if makeIpCont $*; then
+  echo "Built Invisipoint Controller successfully"
+else
+  echo "Built Invisipoint Controller failed"
+  exit -1
+fi
+if makeIpc $*; then
+  echo "Built Invisipoint Client successfully"
+else
+  echo "Built Invisipoint Client failed"
+  exit -1
+fi
+if makeIpe $*; then
+  echo "Built Invisipoint Enforcer uccessfully"
+else
+  echo "Built Invisipoint Enforcer failed"
+  exit -1
+fi
+if makeIg $*; then
+  echo "Built Invisigate successfully"
+else
+  echo "Built Invisigate failed"
+  exit -1
+fi
+echo "Built all 4 (Invisipoint Controller, Invisipoint Client, Invisipoint Enforcer and Invisigate) successfully"

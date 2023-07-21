@@ -1,0 +1,3 @@
+# /bin/bash
+
+scp ${DEV}/../updatedir/Invisigate_Update_R_TEST_RELEASE* mainnt@192.168.132.129:/home/maint

@@ -1,0 +1,3 @@
+# /bin/bash
+
+fgrepl-nb $1 | fgrep ' found in ' | awk '{print $4}'

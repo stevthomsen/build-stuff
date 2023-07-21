@@ -1,0 +1,22 @@
+#! /usr/bin/bash
+
+if [ ${PWD} == ${REL2} ] ; then
+    set -o pipefail
+    make $* clobber EP=1 | tee build.ipc.clobber.log
+    status=$?
+    if [ ${status} -ne 0 ]; then
+      echo "clobber for Ipc failed ${status}"
+      set +o pipefail
+      exit ${status}
+    fi
+    set +o pipefail
+    updateIpc
+    status=$?
+else
+    ./mkbuild.client.sh
+    status=$?
+fi
+if [ ${status} -eq 0 ]; then
+    copyPKGs
+fi
+exit ${status}

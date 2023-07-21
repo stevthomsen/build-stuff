@@ -1,0 +1,22 @@
+#! /usr/bin/bash
+
+set -o pipefail
+make $* clobber 2>&1 | tee build.ig.clobber.log
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "clobber for Ig failed ${status}"
+  set +o pipefail
+  exit ${status}
+fi
+updateIg
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "build for Ig failed ${status}"
+  set +o pipefail
+  exit ${status}
+fi
+set +o pipefail
+if [ ${status} -eq 0 ]; then
+    copyPKGs
+fi
+exit ${status}

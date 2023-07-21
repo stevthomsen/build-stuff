@@ -1,0 +1,10 @@
+#! /usr/bin/bash
+
+set -o pipefail
+make $* 2>&1 | tee build.ig.log
+status=$?
+set +o pipefail
+if [ ${status} -ne 0 ]; then
+    copyPKGs
+fi
+exit ${status}

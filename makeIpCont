@@ -1,0 +1,17 @@
+#! /usr/bin/bash
+
+set -o pipefail
+make $* clobber SRV=1 | tee build.ipe.clobber.log
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "clobber for Ipe failed ${status}"
+  set +o pipefail
+  exit ${status}
+fi
+set +o pipefail
+updateIpCont $*
+status=$?
+if [ ${status} -eq 0 ]; then
+    copyPKGs
+fi
+exit ${status}

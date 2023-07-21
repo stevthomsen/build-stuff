@@ -1,0 +1,19 @@
+#! /usr/bin/bash
+
+#set -x
+
+if [ ${PWD} == ${REL3} ] ; then
+    echo "copying to ~/pkgs/inv_3"
+    cp -p pkg/*.deb ~/pkgs/inv_3
+elif [ ${PWD} == ${REL2} ] ; then
+    echo "copying to ~/pkgs/inv_2"
+    cp -p pkg/*.deb ~/pkgs/inv_2
+elif  [ ${PWD} == ${DEV} ] ; then
+    echo "copying to ~/pkgs/mainline"
+    cp -p pkg/*.deb ~/pkgs/mainline
+else
+    echo "Do not know where to copy to, pwd = ${PWD}"
+    exit -1
+fi
+
+#set +x

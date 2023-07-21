@@ -1,0 +1,58 @@
+#! /usr/bin/bash
+
+#set -x
+#set -o functrace
+
+Usage(){
+    echo "Usage: $0 src dest"
+}
+
+copyFunc() {
+    if ! cmp $1 $2 >/dev/null 2>&1
+    then
+	echo "Copying $1 to $2, since they differ"
+	status=`cp $1 $2`
+	exit $status
+    fi
+}
+
+if [[ $# -ne 2 ]]; then
+    Usage
+    exit 101
+fi
+
+if [ ! -e $1 ]; then
+    echo "$1 does not exist"
+    exit 102
+fi
+
+if [ ! -e $2 ]; then
+    # copy over, since $2 does not exist. return cp status
+    echo "Copying $1 to non-existant $2"
+    status=`cp $1 $2`
+    exit $status
+fi
+
+if [ -d $2 ]; then
+    # copy over to existing directory. return cp status
+    #echo "Check copying $1 to existing directory $2"
+    copyFunc $1 $2/$1
+    exit $status
+fi
+
+# If we got here, $2 exists and is not a directory, so we fail
+# if $1 is a directory
+if [ -d $1 ]; then
+    echo "$1 is a directory and $2 is not a directory"
+    exit 103
+fi
+
+if ! cmp $1 $2 >/dev/null 2>&1
+then
+    echo "Copying $1 to $2, since they differ"
+    status=`cp $1 $2`
+    exit $status
+fi
+
+echo "$1 matches $2"
+exit 0

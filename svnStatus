@@ -1,0 +1,11 @@
+#! /usr/bin/bash
+
+svn status | grep '^[MADG]'
+
+conflictedFiles=`svn status | grep '^[C]' | wc -l`
+if [ ${conflictedFiles} -gt 0 ] ; then
+	echo "Conflicted files:"
+	svn status | grep '^[C]'
+else
+	echo "No Conflicted files!"
+fi

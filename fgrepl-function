@@ -1,0 +1,25 @@
+# /bin/bash
+
+#set -x
+
+Usage(){
+    echo "Usage: $0 pattern file"
+}
+
+fgrepl_function(){
+    myPattern=$1
+    myFile=$2
+    fgrep -lw $myPattern $myFile
+    retVal=$?
+    if [ $retVal -eq 0 ]; then
+        echo "$myPattern found in $myFile"
+        fgrep -wn $myPattern $myFile
+    fi
+}
+
+if [ $# -ne 2 ]; then
+    Usage
+    exit 101
+fi
+
+fgrepl_function $1 $2

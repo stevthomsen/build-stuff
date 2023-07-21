@@ -1,0 +1,15 @@
+#! /usr/bin/bash
+
+set -o pipefail
+make $* SRV=1 2>&1 | tee build.ipe.log
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "build for Ipe failed ${status}"
+  set +o pipefail
+  exit ${status}
+fi
+set +o pipefail
+if [ ${status} -ne 0 ]; then
+    copyPKGs
+fi
+exit ${status}

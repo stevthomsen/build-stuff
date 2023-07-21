@@ -1,0 +1,21 @@
+#! /usr/bin/bash
+
+pushd ${DEV}
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "'${DEV}' is not a valid directory"
+  exit -1
+fi
+svn update
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "svn update failed with ${status}"
+  exit -1
+fi
+buildAll
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "build failed with ${status}"
+  exit -1
+fi
+popd

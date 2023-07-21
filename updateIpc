@@ -1,0 +1,15 @@
+#! /usr/bin/bash
+
+set -o pipefail
+make $* EP=1 2>&1 | tee build.ipc.log
+status=$?
+if [ ${status} -ne 0 ]; then
+  echo "build for Ipc failed ${status}"
+  set +o pipefail
+  exit ${status}
+fi
+set +o pipefail
+if [ ${status} -ne 0 ]; then
+    copyPKGs
+fi
+exit ${status}

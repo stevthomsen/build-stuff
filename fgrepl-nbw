@@ -1,0 +1,25 @@
+# /bin/bash
+
+Usage(){
+    echo "Usage: $0 pattern [dir]"
+}
+
+if [[ $# -ne 2 ]]; then
+    if [[ $# -ne 1 ]]; then
+        Usage
+        exit 101
+    fi
+fi
+
+if [[ $# -eq 1 ]]; then
+    MYDIR="."
+else
+    MYDIR=$2
+fi
+
+if [ ! -e $MYDIR ]; then
+    echo "directory $MYDIR does not exist"
+    exit 102
+fi
+
+find $MYDIR -type f -not -path "./.svn/*" -exec fgrepl-nbw-function $1 \{\} \;
